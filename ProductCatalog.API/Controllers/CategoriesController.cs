@@ -12,10 +12,9 @@ namespace ProductCatalog.API.Controllers
         {
             return Ok(new[]
             {
-                new Category { Id = 1, Title = "Electronics" },
-                new Category { Id = 2, Title = "Accessories" }
+                new Category { Id = 1, Name = "Electronics" },
+                new Category { Id = 2, Name = "Accessories" }
             });
         }
     }
 }
-
