@@ -8,10 +8,19 @@ namespace ProductCatalog.API
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddControllers()
+            builder.Services.AddControllers();
             .AddJsonOptions(options =>
+             {
+                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
+             });
+            builder.Services.AddCors(options =>
             {
-                options.JsonSerializerOptions.PropertyNamingPolicy = null;
+                options.AddPolicy("AllowAll", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader();
+                });
             });
 
             builder.Services.AddEndpointsApiExplorer();
@@ -20,7 +29,7 @@ namespace ProductCatalog.API
             builder.Services.AddSingleton<IProductService, ProductService>();
 
             var app = builder.Build();
-
+            app.UseCors("AllowAll");
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
